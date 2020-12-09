@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import EmployeeTableTemplate from "../EmployeeTableTemplate"
-import Api from "../../utils/Api"
+// import Api from "../../utils/Api"
+import Users from "../../utils/users.json"
 import SearchBar from "../SearchBar";
 
 class EmployeeTable extends Component {
@@ -11,13 +12,19 @@ class EmployeeTable extends Component {
         filteredEmployees: [{}],
         sortBy: "asc",
         sorted: false,
+        loading: true
     }
     //use componentDidMount to require Dom Nodes
     componentDidMount() {
-        Api.searchEmployees().then(res => this.setState({ employees: res.data.results }));
+        console.log("didMount");
+        // Api.returnEmployees()
+        // .then(res => this.setState({ employees: res.data.results }))
+        // .catch(err => console.log(err));
+        // console.log(Users.results);
+        this.setState({employees: Users.results})
     }
-
     handleInputChange(event) {
+        console.log(this.state.employees)
         event.preventDefault();
         let { search } = this.state.search;
         console.log(search);
@@ -31,8 +38,8 @@ class EmployeeTable extends Component {
         });
         console.log(filteredEmployees);
         this.setState({ filteredEmployees: filteredEmployees });
-        this.setState({ search: search });
-        this.setState({ sorted: true });
+        this.setState({ search: event.target.value });
+        this.setState({ sorted: filteredEmployees });
     }
     
     handleClick(event) {
@@ -56,11 +63,13 @@ class EmployeeTable extends Component {
 
     }
 
-    returnEmployees() {
+    returnEmployees = () => {
+        console.log("running function")
         if (this.state.sorted) {
+            console.log("0");
             return (
                 <div>
-                    {this.state.filtered.map(employee => (
+                    {this.state.filteredEmployees.map(employee => (
                         <EmployeeTableTemplate
                             picture={employee.picture.medium}
                             name={employee.name.first + " " + employee.name.last}
@@ -72,7 +81,8 @@ class EmployeeTable extends Component {
                 </div>
             );
         }
-        else {
+        else if (this.state.sorted === false){
+            console.log("1");
             return (
                 <div>
                     {this.state.employees.map(employee => (
@@ -88,12 +98,13 @@ class EmployeeTable extends Component {
             );
         }
     }
+
     render() {
         return (
             <div>
                 <SearchBar 
                 handleInputChange = {this.handleInputChange}/>
-                {this.sortBy}
+                {this.returnEmployees()}
             </div>
         );
     }
