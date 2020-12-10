@@ -24,11 +24,13 @@ class EmployeeTable extends Component {
     //     console.log(Users.results);
     //     this.setState({employees: Users.results})
     // }
-    handleInputChange(event) {
+    handleInputChange= (event) => {
+        if (event.nativeEvent.data){
         event.preventDefault();
         console.log(Users);
         console.log(event.nativeEvent.data);
         let search = event.nativeEvent.data;
+        
         // console.log(search);
         // const lowerCaseSearch = toLowerCase(search);
         // console.log(lowerCaseSearch);
@@ -44,9 +46,11 @@ class EmployeeTable extends Component {
         });
         console.log(filteredEmployees);
         // this does not work
-        // this.setState({ filteredEmployees: filteredEmployees });
-        // this.setState({ search: event.nativeEvent.data });
-        // this.setState({ sorted: filteredEmployees });
+        this.setState({ filteredEmployees: filteredEmployees });
+        this.setState({ search: event.nativeEvent.data });
+        this.setState({ sorted: true });
+        console.log(this.state);
+    }
     }
     
     handleClick(event) {
