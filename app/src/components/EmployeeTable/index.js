@@ -6,7 +6,7 @@ import SearchBar from "../SearchBar";
 
 class EmployeeTable extends Component {
     state = {
-        employees: [{}],
+        employees: Users,
         search: "",
         clicked: "",
         filteredEmployees: [{}],
@@ -15,30 +15,34 @@ class EmployeeTable extends Component {
         loading: true
     }
     //use componentDidMount to require Dom Nodes
-    componentDidMount() {
-        console.log("didMount");
-        // Api.returnEmployees()
-        // .then(res => this.setState({ employees: res.data.results }))
-        // .catch(err => console.log(err));
-        // console.log(Users.results);
-        this.setState({employees: Users.results})
-    }
+    // componentDidMount() {
+    //     console.log("didMount");
+    //     // Api.returnEmployees()
+    //     // .then(res => this.setState({ employees: res.data.results }))
+    //     // .catch(err => console.log(err));
+    //     // console.log(Users.results);
+    //     console.log(Users.results);
+    //     this.setState({employees: Users.results})
+    // }
     handleInputChange(event) {
-        console.log(this.state.employees)
         event.preventDefault();
-        let { search } = this.state.search;
-        console.log(search);
-        const lowerCaseSearch = search.toLowerCase();
-        console.log(lowerCaseSearch);
-        let { employees } = this.state.employees;
-        console.log(employees);
+        console.log(Users);
+        console.log(event.nativeEvent.data);
+        let search = event.nativeEvent.data;
+        // console.log(search);
+        // const lowerCaseSearch = toLowerCase(search);
+        // console.log(lowerCaseSearch);
+        let employees = Users.results;
+        console.log(employees[0].name.first);
         let filteredEmployees = employees.filter(employee => {
+            console.log(search);
+            console.log(employee.name.first.includes(search));
             return(
-                employee.name.first.toLowerCase.includes(lowerCaseSearch)||employee.name.laste.toLowerCase.includes(lowerCaseSearch)            );
+                employee.name.first.includes(search)||employee.name.last.includes(search) );
         });
         console.log(filteredEmployees);
         this.setState({ filteredEmployees: filteredEmployees });
-        this.setState({ search: event.target.value });
+        this.setState({ search: event.nativeEvent.data });
         this.setState({ sorted: filteredEmployees });
     }
     
@@ -85,7 +89,7 @@ class EmployeeTable extends Component {
             console.log("1");
             return (
                 <div>
-                    {this.state.employees.map(employee => (
+                    {this.state.employees.results.map(employee => (
                         <EmployeeTableTemplate
                             picture={employee.picture.medium}
                             name={employee.name.first + " " + employee.name.last}
@@ -103,8 +107,10 @@ class EmployeeTable extends Component {
         return (
             <div>
                 <SearchBar 
-                handleInputChange = {this.handleInputChange}/>
+                handleInputChange = {this.handleInputChange}
+                />
                 {this.returnEmployees()}
+                {this.sortBy}
             </div>
         );
     }
