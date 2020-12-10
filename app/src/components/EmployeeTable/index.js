@@ -36,14 +36,17 @@ class EmployeeTable extends Component {
         console.log(employees[0].name.first);
         let filteredEmployees = employees.filter(employee => {
             console.log(search);
+            
             console.log(employee.name.first.includes(search));
+            
             return(
-                employee.name.first.includes(search)||employee.name.last.includes(search) );
+                employee.name.first.toLowerCase().includes(search.toLowerCase())||employee.name.last.toLowerCase().includes(search.toLowerCase()) );
         });
         console.log(filteredEmployees);
-        this.setState({ filteredEmployees: filteredEmployees });
-        this.setState({ search: event.nativeEvent.data });
-        this.setState({ sorted: filteredEmployees });
+        // this does not work
+        // this.setState({ filteredEmployees: filteredEmployees });
+        // this.setState({ search: event.nativeEvent.data });
+        // this.setState({ sorted: filteredEmployees });
     }
     
     handleClick(event) {
