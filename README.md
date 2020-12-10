@@ -7,7 +7,7 @@
 
 This application displays a list of employees and their information. The app allows the user to type a name first or last and filter through to find specific employees
 
-![workingapp](https://drive.google.com/file/d/1vvuyeGSQmayKkKhnHFsDRy1vYypPcIRI/view)
+
 <!-- ![Image of Webstite](public/assets/images/web.png) -->
 
 ### Table of Contents
